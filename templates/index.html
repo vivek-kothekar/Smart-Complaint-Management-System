@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submit a new complaint to our Expert System for automatic severity evaluation.">
+    <title>Smart Complaint Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Smart Complaint System</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Submit Complaint</a>
+            <a href="{{ url_for('track') }}">Track Complaint</a>
+            <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="glass-panel">
+            <h2>File a Complaint</h2>
+            <form action="{{ url_for('submit_complaint') }}" method="POST">
+                <div class="form-group">
+                    <label for="complaint_type">Complaint Type</label>
+                    <select id="complaint_type" name="complaint_type" required>
+                        <option value="" disabled selected>Select complaint type</option>
+                        <option value="Server Down">Server Down</option>
+                        <option value="Payment Issue">Payment Issue</option>
+                        <option value="Login Issue">Login Issue</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="severity">Severity</label>
+                    <select id="severity" name="severity" required>
+                        <option value="" disabled selected>Select severity</option>
+                        <option value="Critical">Critical</option>
+                        <option value="Major">Major</option>
+                        <option value="Minor">Minor</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer_type">Customer Type</label>
+                    <select id="customer_type" name="customer_type" required>
+                        <option value="" disabled selected>Select customer type</option>
+                        <option value="Premium">Premium</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Guest">Guest</option>
+                    </select>
+                </div>
+                
+                <button type="submit">Submit Complaint</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

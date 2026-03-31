@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View the dynamically generated priority result from our Complaint System rules engine.">
+    <title>Priority Result - Smart Complaint System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Smart Complaint System</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Submit Complaint</a>
+            <a href="{{ url_for('track') }}">Track Complaint</a>
+            <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="glass-panel result-card">
+            <h2>Complaint Evaluated</h2>
+            <p>The expert system has processed your complaint and assigned a priority.</p>
+            
+            <div class="priority-badge {{ complaint.priority }}">
+                {{ complaint.priority }} PRIORITY
+            </div>
+            
+            <p style="color: var(--text-main); font-weight: 500; background: rgba(59, 130, 246, 0.2); padding: 0.75rem; border-radius: 0.5rem; border: 1px solid var(--accent); margin-bottom: 2rem;">
+                Please save your Complaint ID: <b style="font-size: 1.25rem;">#{{ complaint.id }}</b><br>
+                <span style="font-size: 0.875rem; font-weight: 400;">You can use this ID to <a href="{{ url_for('track') }}" style="color: #93c5fd;">track your complaint status</a> later.</span>
+            </p>
+            
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="label">Complaint ID</span>
+                    <span class="value">#{{ complaint.id }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Date Submitted</span>
+                    <span class="value">{{ complaint.date }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Type</span>
+                    <span class="value">{{ complaint.complaint_type }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Customer</span>
+                    <span class="value">{{ complaint.customer_type }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Severity</span>
+                    <span class="value">{{ complaint.severity }}</span>
+                </div>
+            </div>
+            
+            <a href="{{ url_for('index') }}" style="text-decoration: none;">
+                <button type="button">Submit Another Complaint</button>
+            </a>
+        </div>
+    </main>
+</body>
+</html>

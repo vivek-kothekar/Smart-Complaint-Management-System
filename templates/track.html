@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your existing complaint status using your Complaint ID.">
+    <title>Track Complaint - Smart Complaint System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Smart Complaint System</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Submit Complaint</a>
+            <a href="{{ url_for('track') }}">Track Complaint</a>
+            <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="glass-panel" style="max-width: 600px;">
+            <h2>Track Your Complaint Status</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Enter your <b>Complaint ID</b> below to check its current status and priority.</p>
+            
+            <form action="{{ url_for('track') }}" method="POST" style="margin-bottom: 2rem;">
+                <div class="form-group">
+                    <label for="complaint_id">Complaint ID</label>
+                    <input type="text" id="complaint_id" name="complaint_id" placeholder="e.g. 5" required>
+                </div>
+                <button type="submit">Check Status</button>
+            </form>
+
+            {% if error %}
+            <div style="padding: 1rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 0.5rem; color: #fca5a5; text-align: center;">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            {% if complaint %}
+            <div class="result-card" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Complaint Details #{{ complaint.id }}</h3>
+                
+                <div class="priority-badge {{ complaint.priority }}">
+                    {{ complaint.priority }} Priority
+                </div>
+                
+                <div style="margin: 1rem 0 2rem 0;">
+                    <span style="font-size: 1.25rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; background: rgba(255, 255, 255, 0.1);">
+                        Status: <span style="color: {% if complaint.status == 'Resolved' %}var(--priority-low){% elif complaint.status == 'Open' %}var(--priority-medium){% else %}var(--accent){% endif %};">{{ complaint.status }}</span>
+                    </span>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="label">Complaint Type</span>
+                        <span class="value">{{ complaint.complaint_type }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Severity</span>
+                        <span class="value">{{ complaint.severity }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Customer Profile</span>
+                        <span class="value">{{ complaint.customer_type }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Date Submitted</span>
+                        <span class="value">{{ complaint.date }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

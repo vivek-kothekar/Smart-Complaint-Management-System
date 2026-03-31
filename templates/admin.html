@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Administrator dashboard to view all evaluated complaints and their dynamic priorities.">
+    <title>Admin Dashboard - Smart Complaint System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Smart Complaint System</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Submit Complaint</a>
+            <a href="{{ url_for('track') }}">Track Complaint</a>
+            <a href="{{ url_for('admin') }}">Admin Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="glass-panel large">
+            <h2>Admin Dashboard</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Real-time overview of all submitted complaints and their AI-assigned priorities.</p>
+            
+            <div class="analytics-row" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                <div class="analytic-card" style="flex: 1; background: rgba(15, 23, 42, 0.4); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color); text-align: center;">
+                    <h3 style="color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase;">Total Complaints</h3>
+                    <p style="font-size: 2rem; font-weight: bold; margin-top: 0.5rem;">{{ total }}</p>
+                </div>
+                <div class="analytic-card" style="flex: 1; background: rgba(15, 23, 42, 0.4); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color); text-align: center;">
+                    <h3 style="color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase;">Open Cases</h3>
+                    <p style="font-size: 2rem; font-weight: bold; margin-top: 0.5rem;">{{ open_cases }}</p>
+                </div>
+                <div class="analytic-card" style="flex: 1; background: rgba(15, 23, 42, 0.4); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color); text-align: center;">
+                    <h3 style="color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase;">High Priority</h3>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--priority-high); margin-top: 0.5rem;">{{ high_priority }}</p>
+                </div>
+                <div class="analytic-card" style="flex: 1; background: rgba(15, 23, 42, 0.4); padding: 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color); text-align: center;">
+                    <h3 style="color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase;">Resolved</h3>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--priority-low); margin-top: 0.5rem;">{{ resolved_cases }}</p>
+                </div>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Severity</th>
+                            <th>Customer</th>
+                            <th>Priority</th>
+                            <th>Status & Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in complaints %}
+                        <tr>
+                            <td>#{{ c.id }}</td>
+                            <td>{{ c.date }}</td>
+                            <td>{{ c.complaint_type }}</td>
+                            <td>{{ c.severity }}</td>
+                            <td>{{ c.customer_type }}</td>
+                            <td><span class="badge {{ c.priority }}">{{ c.priority }}</span></td>
+                            <td>
+                                <form action="{{ url_for('update_status', complaint_id=c.id) }}" method="POST" style="display: flex; gap: 0.5rem; align-items: center; justify-content: center; margin: 0;">
+                                    <select name="status" style="padding: 0.25rem 0.5rem; background: rgba(15,23,42,0.8); width: auto; font-size: 0.875rem; border-radius: 0.25rem;">
+                                        <option value="Open" {% if c.status == 'Open' %}selected{% endif %}>Open</option>
+                                        <option value="In Progress" {% if c.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                        <option value="Resolved" {% if c.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                                    </select>
+                                    <button type="submit" style="padding: 0.25rem 0.5rem; margin-top: 0; width: auto; font-size: 0.75rem;">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">No complaints found in the database.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
