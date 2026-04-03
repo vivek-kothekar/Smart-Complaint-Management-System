@@ -1,41 +1,50 @@
-# 📌 Smart Complaint Management System
+# 📌 Smart Complaint Management System (Expert System)
 
 ## 🚀 Overview
 
-The **Smart Complaint Management System** is a web-based application built using **Flask (Python)** that automates complaint handling using a **rule-based expert system**.
+The **Smart Complaint Management System** is a web-based application built using **Flask (Python)** that acts as a **Rule-Based Expert System**.
 
-It allows users to submit complaints, automatically assigns priority based on predefined rules, and enables admins to manage and track complaints efficiently.
+It automatically evaluates customer complaints and assigns **priority levels (High, Medium, Low)** using predefined logical rules, helping organizations handle issues faster and more efficiently.
 
 ---
 
 ## 🎯 Problem Statement
 
-Handling large volumes of complaints in systems like IT helpdesks, customer support, and government portals is challenging due to:
+In systems like IT helpdesks and customer support:
 
-* Slow manual prioritization
-* Inconsistent decision-making
-* Delayed response time
+* Complaints are manually reviewed
+* Priority assignment is slow and inconsistent
+* Critical issues may get delayed
 
-This project solves these issues using an **AI-based rule system** for automatic complaint prioritization.
+This project solves the problem using an **automated rule-based decision system**.
 
 ---
 
 ## 🧠 AI Concept Used
 
-### Expert System (Rule-Based AI)
+### 🔹 Expert System (Symbolic AI)
 
-The system is based on:
+This project is based on **classical AI (Symbolic AI)**
 
-* **Knowledge Base** → Complaint rules
-* **Rule Base** → IF-THEN conditions
-* **Inference Engine** → Decision-making logic
+It mimics the decision-making of a human expert using rules.
 
-### Example Rules:
+### Core Components:
 
-* Server Down → **High**
-* Payment Issue + Premium Customer → **High**
-* Login Issue → **Medium**
-* General Inquiry → **Low**
+* **Knowledge Base** → IF-THEN rules inside `determine_priority()`
+* **Working Memory** → User inputs (complaint_type, severity, customer_type)
+* **Inference Engine** → Python logic that applies rules
+
+---
+
+## ⚙️ Logic Method
+
+### Forward Chaining
+
+The system uses a **data-driven approach**:
+
+1. Takes user input (facts)
+2. Applies rules step-by-step
+3. Produces final decision (priority)
 
 ---
 
@@ -45,75 +54,77 @@ The system is based on:
 
 * Submit complaints
 * Automatic priority assignment
-* View complaint result
+* Receive complaint ID
 
 ### 🔍 Tracking
 
 * Track complaint using ID
 * View status (**Open / In Progress / Resolved**)
 
-### 🛠️ Admin
+### 🛠️ Admin Dashboard
 
 * View all complaints
 * Update complaint status
+* View analytics:
 
-**Dashboard insights:**
-
-* Total complaints
-* Open cases
-* High priority cases
-* Resolved cases
+  * Total complaints
+  * High priority cases
+  * Resolved cases
 
 ---
 
 ## ⚙️ Tech Stack
 
 * **Backend:** Python (Flask)
-* **Frontend:** HTML, CSS, Jinja Templates
+* **Frontend:** HTML, CSS, Jinja2
 * **Database:** SQLite
 
 ---
 
 ## 🗂️ Project Structure
 
-```
+```id="final1"
 Smart-Complaint-Management-System/
 │
-├── app.py
+├── app.py                  # Backend + Expert System logic
+├── README.md
+│
 ├── database/
-│   └── complaints.db
-├── templates/
-│   ├── index.html
-│   ├── result.html
-│   ├── admin.html
-│   └── track.html
+│   └── complaints.db       # SQLite database
+│
 ├── static/
-│   └── style.css
-└── README.md
+│   └── style.css           # UI styling
+│
+└── templates/
+    ├── index.html          # Complaint form
+    ├── result.html         # Priority result
+    ├── track.html          # Track complaint
+    └── admin.html          # Admin dashboard
 ```
 
 ---
 
-## 🧩 Workflow
+## 🧩 System Workflow
 
-1. User submits a complaint
-2. System applies rule-based logic
-3. Priority is assigned (**High / Medium / Low**)
-4. Complaint is stored in the database
-5. Admin updates status
-6. User can track complaint anytime
+1. User submits complaint form
+2. Data is sent to Flask backend
+3. `determine_priority()` evaluates inputs
+4. Priority is assigned using rules
+5. Data is stored in SQLite database
+6. Admin manages complaints
+7. User tracks status using ID
 
 ---
 
 ## 🧮 Rule Engine Logic
 
-**Function used:**
+**Function:**
 
-```
+```id="final2"
 determine_priority(complaint_type, severity, customer_type)
 ```
 
-### Rules:
+### Example Rules:
 
 * Server Down → High
 * Payment Issue + Premium → High
@@ -121,7 +132,6 @@ determine_priority(complaint_type, severity, customer_type)
 * Login Issue + Critical → High
 * Login Issue → Medium
 * General Inquiry → Low
-* Default → Based on severity
 
 ---
 
@@ -146,7 +156,7 @@ http://127.0.0.1:5000/
 | id             | Complaint ID      |
 | complaint_type | Type of complaint |
 | severity       | Severity level    |
-| customer_type  | Customer category |
+| customer_type  | Customer type     |
 | priority       | Assigned priority |
 | date           | Submission time   |
 | status         | Complaint status  |
@@ -168,28 +178,39 @@ http://127.0.0.1:5000/
 
 ## 📈 Advantages
 
-* Faster resolution
+* Fast complaint processing
 * Automated prioritization
-* Reduced manual work
-* Consistent decisions
-* Improved efficiency
+* Reduces manual effort
+* Consistent decision-making
+* Easy to implement and scalable
 
 ---
 
 ## 🌍 Applications
 
 * IT Helpdesk Systems
-* E-commerce Support
-* Banking Systems
-* Telecom Services
-* Government Portals
+* Customer Support Platforms
+* Banking & Financial Services
+* E-commerce Systems
+* Government Complaint Portals
 
 ---
 
 ## 🔮 Future Enhancements
 
-* Authentication system
-* Email/SMS alerts
-* ML-based prioritization
-* Advanced analytics
+* User authentication system
+* Email/SMS notifications
+* Advanced analytics dashboard
 * Cloud deployment
+
+---
+
+## 🎓 Academic Note
+
+This project demonstrates a **Rule-Based Expert System using Symbolic AI**.
+
+Unlike Machine Learning, it provides:
+
+* Deterministic results
+* No training data requirement
+* High reliability for critical systems
