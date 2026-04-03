@@ -73,14 +73,14 @@ Smart-Complaint-Management-System/
 │
 ├── app.py
 ├── database/
-│ └── complaints.db
+│   └── complaints.db
 ├── templates/
-│ ├── index.html
-│ ├── result.html
-│ ├── admin.html
-│ └── track.html
+│   ├── index.html
+│   ├── result.html
+│   ├── admin.html
+│   └── track.html
 ├── static/
-│ └── style.css
+│   └── style.css
 └── README.md
 
 
