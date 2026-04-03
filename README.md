@@ -68,7 +68,7 @@ The system is based on:
 
 ## 🗂️ Project Structure
 
-
+```
 Smart-Complaint-Management-System/
 │
 ├── app.py
@@ -82,6 +82,7 @@ Smart-Complaint-Management-System/
 ├── static/
 │   └── style.css
 └── README.md
+```
 
 
 ---
